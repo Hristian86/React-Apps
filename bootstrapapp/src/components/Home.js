@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import Cards from './Cards/Cards';
 
 export default class Home extends Component {
 
     render() {
         return (
             <div>
-                asddddssssssssssssssssssssss Home
+                <Cards />
+                <div className="spacer"></div>
             </div>
             )
     }

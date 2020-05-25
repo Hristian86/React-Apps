@@ -1,3 +1,44 @@
+.userInput, .passwordInput {
+    margin-top:8px;
+    margin-bottom:20px;
+    width:400px!important;
+    height:35px!important;
+}
+
+.registerForm {
+    margin-top:100px;
+}
+
+.logo {
+    color:green;
+    text-align:center;
+}
+
+.backgrounds {
+    height: 800px;
+    background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQJaEaP951be3aa37GGvSmBwp5ZfNUobIqoaxuGzaqJIYPAPzbp&usqp=CAU");
+    background-position-y: -300px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.footer {
+    height:80px;
+    width:100%;
+}
+
+.firstFooterLink {
+    text-align:center;
+}
+
+.spacer {
+    height: 300px;
+}
+
+
+
+
+
 /*.App {
   text-align: center;
 }

@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 import Contact from './components/Contact';
 import Home from './components/Home';
+import Register from './components/Auth/Register';
+import login from './components/Auth/LogIn';
 
 
 export default class App extends Component {
@@ -22,7 +24,7 @@ export default class App extends Component {
                 <header className="App-header">
                     <Layout>
                         <Router>
-                            <switch>
+                            <Switch>
                                 <Route exact path="/" component={Home}>
                                 </Route>
 
@@ -31,7 +33,11 @@ export default class App extends Component {
 
                                 <Route path="/Contact" component={Contact}>
                                 </Route>
-                            </switch>
+                                <Route path="/Auth/Register" component={Register}>
+                                </Route>
+                                <Route path="/Auth/LogIn" component={login}>
+                                </Route>
+                            </Switch>
                         </Router>
 
                     </Layout>
