@@ -3,10 +3,11 @@
     margin-bottom:20px;
     width:400px!important;
     height:35px!important;
+    text-align:center;
 }
 
 .registerForm {
-    margin-top:100px;
+    margin-top:60px;
 }
 
 .logo {
@@ -34,6 +35,16 @@
 .spacer {
     height: 300px;
 }
+
+.buttons {
+    height:50px;
+    width:398px;
+}
+
+.error {
+    height:50px;
+}
+
 
 
 
