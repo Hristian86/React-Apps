@@ -49,8 +49,28 @@ export default class navbar extends Component {
     render() {
         let cheks = false;
         let usr = this.state.user;
+        let displayName = null;
+        let token = null;
         if (usr) {
             cheks = true;
+            displayName = usr.displayName;
+            token = usr.refreshToken;
+            localStorage.setItem("userToken", token);
+            var localuser = localStorage.getItem("userToken");
+            var currUser = fire.auth().currentUser;
+
+            //currUser.updateProfile({
+            //    displayName: "icaka",
+            //    photoURL: "https://cdn.icon-icons.com/icons2/1879/PNG/512/iconfinder-8-avatar-2754583_120515.png"
+            //})
+            //    .then(upd => console.log(upd))
+            //    .catch(err => console.log(err));
+            //console.log(currUser.displayName);
+            //console.log(currUser.photoURL);
+
+            var results = localuser === currUser.refreshToken ? "true" : "false";
+            //console.log(results);
+
         } else {
             cheks = false;
         }
@@ -63,7 +83,10 @@ export default class navbar extends Component {
                     <Nav className="mr-auto">
 
                         <Nav.Link href="/About" onClick={() => this.prevDef}>About</Nav.Link>
+
                         <Nav.Link href="/Contact" onClick={() => this.prevDef}>Contact</Nav.Link>
+
+                        <Nav.Link href="/components/HearthStoneCards/HearthstoneCard" onClick={() => this.prevDef}>Hearthstone</Nav.Link>
 
                     </Nav>
                     <Form inline className="mr-3">
@@ -71,7 +94,7 @@ export default class navbar extends Component {
                         <Button variant="outline-success">Search</Button>
                     </Form>
 
-                    {cheks ? <div>Hello user</div> :
+                    {cheks ? <Nav.Link href="/Auth/Manage" className="text-info" onClick={() => this.prevDef}>{displayName !== null ? displayName+"'s" : ""} management</Nav.Link> :
                         <Nav.Link href="/Auth/Register" className="text-info" onClick={() => this.prevDef}>Register</Nav.Link>}
 
                     {cheks ? <Nav.Link href="/Auth/Logout" className="mr-3 text-info" onSubmit={() => this.prevDef}>Log out</Nav.Link> : <Nav.Link href="/Auth/LogIn" className="mr-3 text-info" onClick={() => this.prevDef}>LogIn</Nav.Link>}

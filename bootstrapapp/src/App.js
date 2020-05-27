@@ -17,6 +17,8 @@ import Register from './components/Auth/Register';
 import login from './components/Auth/LogIn';
 import fire from './components/FirebaseAuth/Config';
 import Logout from './components/Auth/Logout';
+import Manage from './components/Auth/Manage';
+import Hcard from './components/HearthStoneCards/HearthstoneCard';
 //import PrivateRoute from './components/Auth/PrivateRoute';
 
 var useraaa = [];
@@ -73,11 +75,17 @@ export default class App extends Component {
 
                                 <Route path="/Contact" component={Contact}>
                                 </Route>
+
+                                <Route path="/components/HearthStoneCards/HearthstoneCard" component={Hcard}>
+                                </Route>
+
                                 <Route path="/Auth/Register" component={Register}>
                                 </Route>
                                 <Route path="/Auth/LogIn" component={login}>
                                 </Route>
                                 <Route path="/Auth/Logout" component={Logout}>
+                                </Route>
+                                <Route path="/Auth/Manage" component={Manage}>
                                 </Route>
                             </Switch>
                         </Router>

@@ -9,6 +9,7 @@ export default class Register extends Component {
 
     signUpFunc = (e) => {
         e.preventDefault();
+        let error = document.getElementById('errors');
         const { history } = this.props;
         const email = e.target.email.value;
         const password = e.target.password.value;
@@ -16,20 +17,40 @@ export default class Register extends Component {
 
         try {
 
-            let error = document.getElementById('errors');
             error.innerHTML = "";
             if (password === passwordConf) {
-                var userCreate = fire.auth().createUserWithEmailAndPassword(email, password)
-                    .then(resp => console.log(resp))
-                    .catch(err => console.log(err));
 
-                setTimeout(function () {
-                    history.push("/");
-                }, 700)
+                if (email.length > 5 && password.length > 5) {
+
+                    var userCreate = fire.auth().createUserWithEmailAndPassword(email, password)
+                        .then(resp => console.log(resp))
+                        .catch(err => console.log(err));
+
+                    if (userCreate) {
+
+                        error.innerHTML = "Account created suceesfully";
+
+                    }
+
+                    setTimeout(function () {
+                        history.push("/");
+                        window.location.reload(false);
+                    }, 700);
+
+                } else {
+                    if (email.length < 6) {
+
+                        error.innerHTML = "Email addres lenght must be at least 6 symbols";
+
+                    } else if (password.length < 6) {
+
+                        error.innerHTML = "Password length must be at least 6 symbols";
+
+                    }
+                }
 
             } else {
-                let error = document.getElementById('errors');
-                error.innerHTML = "Invalid Input";
+                error.innerHTML = "Password does not match";
             }
         } catch (e) {
             console.log(e);
@@ -38,7 +59,6 @@ export default class Register extends Component {
 
 
     render() {
-
         return (
             <div className="backgrounds">
                 <h3 className="logo">Register</h3>
@@ -62,6 +82,7 @@ export default class Register extends Component {
 
                     </form>
 
+                    <div className="spacer"></div>
                 </div>
 
             </div>

@@ -15,23 +15,42 @@ export default class login extends Component {
 
     loginFunc = (e) => {
         e.preventDefault();
+        let error = document.getElementById('errors');
         const { history } = this.props;
         const email = e.target.email.value;
         const password = e.target.password.value;
 
 
-        try {
-            let error = document.getElementById('errors');
-            error.innerHTML = "Success";
 
-            var responce = fire.auth().signInWithEmailAndPassword(email, password)
-                .then(resp => console.log(resp))
-                .catch(err => console.log(err));
-            setTimeout(function () {
-                history.push('/');
-            }, 700)
+
+        try {
+
+            if (email.length > 5 && password.length > 5) {
+
+                error.innerHTML = "Success";
+
+                var responce = fire.auth().signInWithEmailAndPassword(email, password)
+                    .then(resp => console.log(resp))
+                    .catch(err => console.log(err));
+
+                setTimeout(function () {
+                    history.push('/');
+                    window.location.reload(false);
+                }, 700);
+
+            } else {
+                if (email.length < 6) {
+
+                    error.innerHTML = "Email addres lenght must be at least 6 symbols";
+
+                } else if (password.length < 6) {
+
+                    error.innerHTML = "Password length must be at least 6 symbols";
+
+                }
+            }
+
         } catch (e) {
-            let error = document.getElementById('errors');
             error.innerHTML = "Invalid Input";
         }
 
@@ -62,6 +81,7 @@ export default class login extends Component {
 
                     </form>
 
+                    <div className="spacer"></div>
                 </div>
             </div>
 

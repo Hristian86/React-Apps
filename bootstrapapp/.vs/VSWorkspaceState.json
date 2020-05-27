@@ -6,8 +6,11 @@
     "\\src\\components",
     "\\src\\components\\Auth",
     "\\src\\components\\Cards",
-    "\\src\\components\\FirebaseAuth"
+    "\\src\\components\\FirebaseAuth",
+    "\\src\\components\\FirebaseDB",
+    "\\src\\components\\HearthStoneCards",
+    "\\src\\server"
   ],
-  "SelectedNode": "\\src\\components\\Auth\\Register.js",
+  "SelectedNode": "\\src\\components\\HearthStoneCards\\HearthstoneCard.js",
   "PreviewInSolutionExplorer": false
 }
