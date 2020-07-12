@@ -11,6 +11,9 @@ import {
 } from "react-router-dom";
 import fireDB from './FirebaseDB/fireDB';
 import dataS from './Cards/dataS';
+import Tests from './Tests';
+import './HearthStoneCards/Hearth.css'
+import propsy from './SendingProps';
 
 export const UserContext = createContext({ user: null });
 
@@ -18,7 +21,11 @@ export default class Home extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {}
+        this.state = {
+            user: null,
+            loading: false,
+            dataAis: []
+        }
         this.data = [];
 
         this.authListener = this.authListener.bind(this);
@@ -36,10 +43,16 @@ export default class Home extends Component {
                 this.setState({
                     user: user,
                     loading: true,
-                    dataAis: []
+                    dataAis: [],
+                    chekses: false
                 });
             } else {
-                this.setState = null;
+                this.setState = ({
+                    user: null,
+                    loading: true,
+                    dataAis: [],
+                    chekses: true
+                })
             }
         });
 
@@ -65,6 +78,7 @@ export default class Home extends Component {
 
             //    dataPlace.innerHTML += `Name is ${name} with last name ${lastName} at age ${age} <br />`;
 
+
             //}
         } catch (e) {
             console.log(e);
@@ -72,13 +86,42 @@ export default class Home extends Component {
 
     }
 
+    getDataFromStore = () => {
+        return this.state.dataAis ? this.state.dataAis.map((data, index) => <tr key={index}>
+            <td>{data.id}</td>
+            <td>{data.createdOn}</td>
+            <td>{data.subject}</td>
+            <td>{data.userId}</td>
+        </tr>) : null;
+    }
+
+    getDataFromFire = () => {
+        return this.state.dataAis ? this.state.dataAis.map((data, index) =>
+            <tr key={index}>
+                <td>{data.id}</td>
+                <td>{data.name}</td>
+                <td>{data.lastName}</td>
+                <td>{data.age}</td>
+                <td>{data.token}</td>
+            </tr>
+        ) : null;
+    }
+
+    logetUserChek = () => {
+
+    }
+
     render() {
         let usr = this.state.user;
         let fireQuery = new fireDB();
-
+        
         return (
             <div>
-                {this.state.user ? (<Cards />) : <div className="text-center">Not logged</div>}
+                {propsy(this.state.user)}        
+                {this.state.user ? <Tests name={this.state.user.displayName} /> : <Tests name={""} />}
+
+                {this.state.user ? (<Cards />) : <div className="text-center load">Not logged</div>}
+                    
 
                 {this.state.user ? <div className="d-flex justify-content-between">
 
@@ -98,14 +141,7 @@ export default class Home extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.dataAis ? this.state.dataAis.map((data, index) =>
-                            <tr key={index}>
-                                <td>{data.id}</td>
-                                <td>{data.name}</td>
-                                <td>{data.lastName}</td>
-                                <td>{data.age}</td>
-                            </tr>
-                        ) : null}
+                        {this.getDataFromStore()}
                     </tbody>
                 </table> : null}
 

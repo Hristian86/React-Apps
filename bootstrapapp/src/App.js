@@ -58,6 +58,11 @@ export default class App extends Component {
     }
 
     render() {
+        //if (!this.state.user) {
+        //    return (
+        //        <div><em>Loaging...</em></div>
+        //    )
+        //}
 
         return (
             <div className="App">

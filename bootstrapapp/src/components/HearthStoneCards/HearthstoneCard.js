@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import './Hearth.css'
 
 export default class Card extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             cards: [], loading: true
         };
-
     }
 
     componentDidMount() {
@@ -41,7 +42,7 @@ export default class Card extends Component {
 
     render() {
         let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
+            ? <p className="load"><em>Loading...</em></p>
             : Card.ShowCards(this.state.cards);
 
         return (

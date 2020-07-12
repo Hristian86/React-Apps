@@ -34,7 +34,7 @@ export default class Register extends Component {
 
                     setTimeout(function () {
                         history.push("/");
-                        window.location.reload(false);
+                        window.location.reload(false    );
                     }, 700);
 
                 } else {

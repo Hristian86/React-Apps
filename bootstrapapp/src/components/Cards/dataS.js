@@ -5,7 +5,9 @@ import ssd from './ssd';
 export default class dataS extends Component {
     constructor(props) {
         super(props)
-        this.state = []
+        this.state = {
+            data:[]
+        }
 
         this.getItems = this.getItems.bind(this);
     }
@@ -17,7 +19,7 @@ export default class dataS extends Component {
     async getItems() {
         let db = new fireDB();
         let items = await db.readFromDb();
-        this.setState = items
+        this.setState({data: items })
         console.log(this.state)
     }
 

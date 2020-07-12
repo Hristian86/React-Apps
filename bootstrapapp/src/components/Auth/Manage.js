@@ -58,17 +58,15 @@ export default class Manage extends Component {
         } catch (e) {
             error.innerHTML = "Invalid Input";
         }
-
-
     }
 
     render() {
 
         let manage = new Manage();
         let user = manage.getUserProfile();
-        if (user) {
+        //if (user) {
 
-        }
+        //}
 
         let manageProfile = user ? <div>
 

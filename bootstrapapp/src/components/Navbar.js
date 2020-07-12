@@ -13,6 +13,7 @@ import LogIn from './Auth/LogIn';
 import RegAuth from './Auth/RegAuth';
 import Cards from './Cards/Cards';
 import fire from './FirebaseAuth/Config';
+import propsy from './SendingProps';
 
 export default class navbar extends Component {
     constructor(props) {
@@ -49,6 +50,9 @@ export default class navbar extends Component {
     render() {
         let cheks = false;
         let usr = this.state.user;
+
+        propsy(this.state.user); //component test from function
+
         let displayName = null;
         let token = null;
         if (usr) {
@@ -77,7 +81,7 @@ export default class navbar extends Component {
 
         return (
             <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="/" onClick={() => this.prevDef}>NOUP</Navbar.Brand>
+                <Navbar.Brand href="/" onClick={() => this.prevDef}>Home</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
@@ -101,7 +105,6 @@ export default class navbar extends Component {
 
                 </Navbar.Collapse>
             </Navbar>
-
         )
     }
 }

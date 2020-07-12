@@ -9,7 +9,7 @@ export default class contact extends Component {
     render() {
         return (
             <div>
-                <h3></h3>
+                <h3>Hello</h3>
                 <button onClick={this.logout}></button>
             <div className="spacer"></div>
             </div>
