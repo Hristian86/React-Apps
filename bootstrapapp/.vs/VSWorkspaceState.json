@@ -1,16 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\Auth",
+    "\\src\\components\\AuthO",
     "\\src\\components\\Cards",
-    "\\src\\components\\FirebaseAuth",
-    "\\src\\components\\FirebaseDB",
-    "\\src\\components\\HearthStoneCards",
-    "\\src\\server"
+    "\\src\\components\\ContextApi",
+    "\\src\\Pages",
+    "\\src\\Pages\\Home"
   ],
-  "SelectedNode": "\\src\\components\\SendingProps.js",
+  "SelectedNode": "\\src\\App.js",
   "PreviewInSolutionExplorer": false
 }

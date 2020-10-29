@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Layout from './components/Layout';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import About from './components/About';
 import {
     BrowserRouter as Router,
     Switch,
@@ -11,130 +10,131 @@ import {
     Link,
     Redirect
 } from "react-router-dom";
-import Contact from './components/Contact';
-import Home from './components/Home';
-import Register from './components/Auth/Register';
-import login from './components/Auth/LogIn';
-import fire from './components/FirebaseAuth/Config';
-import Logout from './components/Auth/Logout';
-import Manage from './components/Auth/Manage';
-import Hcard from './components/HearthStoneCards/HearthstoneCard';
+import Register from './components/AuthO/Register';
+import login from './components/AuthO/LogIn';
+import Logout from './components/AuthO/Logout';
+import Home from './Pages/Home/Home';
+import Navbars from './components/Navbars';
+import { useState } from 'react';
+import { useStateValue } from './components/ContextApi/StateProvider';
+import getCookie from './components/Cookies/GetCookie';
+import setCookie from './components/Cookies/SetCookie';
+import url from './components/BaseUrl/BaseUrl';
 //import PrivateRoute from './components/Auth/PrivateRoute';
+const App = () => {
 
-var useraaa = [];
-
-export default class App extends Component {
-    constructor(props) {
-        super(props)
-
-
-        this.state = {}
-
-        this.authListener = this.authListener.bind(this);
-    }
-
-    async componentDidMount() {
-        await this.authListener();
-        await authListener();
-    }
-
-
-    async authListener() {
-        const users = await fire.auth().onAuthStateChanged(user => {
-            if (user) {
-                this.setState({
-                    user: user
+    const [state, setState] = useState({});
+    const [state1, setState1] = useState({});
+    const [{ fetchData }, { user }, dispatch] = useStateValue();
+    
+    useEffect(() => {
+        const getData = async () => {
+            const result = await authListener("categoriesApi");
+            if (result) {
+                setState1({
+                    data: result
                 });
-                useraaa = user;
-            } else {
-                this.setState = null;
             }
-        });
-
-        //<Route path="/About" component={About}>
-        //</Route>
-
-        return users;
-    }
-
-    render() {
-        //if (!this.state.user) {
-        //    return (
-        //        <div><em>Loaging...</em></div>
-        //    )
-        //}
-
-        return (
-            <div className="App">
-                <header className="App-header">
-                    <Layout>
-                        <Router>
-                            <Switch>
-                                <Route exact path="/" component={Home}>
-                                </Route>
-
-                                {this.state.user ? <Route path="/About" component={About}>
-                                </Route> : <Route path="/Auth/LogIn" component={login}>
-                                    </Route> } 
-
-
-                                <Route path="/Contact" component={Contact}>
-                                </Route>
-
-                                <Route path="/components/HearthStoneCards/HearthstoneCard" component={Hcard}>
-                                </Route>
-
-                                <Route path="/Auth/Register" component={Register}>
-                                </Route>
-                                <Route path="/Auth/LogIn" component={login}>
-                                </Route>
-                                <Route path="/Auth/Logout" component={Logout}>
-                                </Route>
-                                <Route path="/Auth/Manage" component={Manage}>
-                                </Route>
-                            </Switch>
-                        </Router>
-
-                    </Layout>
-
-                </header>
-            </div>
-        );
-    }
-}
-
-const PrivateRoute = ({ component: Component, ...rest }) => {
-    var resut = authListener();
-    var rs = { ...rest };
-    var chek = false;
-    resut.then(res => res);
-    setTimeout(() => {
-        console.log(useraaa);
-        if (useraaa.email !== undefined) {
-            return <Route {...rest} render={(props) => (
-                chek ? <Component {...props} /> : <Redirect to="/Auth/LogIn" />
-            )
-            } />
         }
-    }, 1000);
+        getData();
+    }, []);
 
-    if (rs !== undefined) {
-        chek = true;
+    const addUser = () => {
+        dispatch({
+            type: 'CHEK_USER',
+            user: {},
+        })
     }
 
-    return <Route {...rest} render={(props) => (
-        chek ? <Component {...props} /> : <Redirect to="/Auth/LogIn" />
-    )
-    } />
-}
-
-async function authListener() {
-    let chek = false;
-    const users = await fire.auth().onAuthStateChanged(user => {
+    const authListener = async (apiController) => {
+        const user = getCookie('user');
         if (user) {
-            chek = true;
+            setState({
+                user: user
+            });
         } else {
+            setState({
+                user: null
+            });
         }
-    });
-    return chek;
+
+        const token = getCookie('token');
+        const result = await fetch(url(apiController),
+            {
+                "headers": {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        )
+            .then(data => data.json())
+            .catch(err => console.log(err));
+
+        return result;
+    }
+    //console.log(state);
+    //console.log(state1);
+
+
+    return <div className="App">
+        <header className="App-header">
+            <Layout>
+                <Router>
+                        <Navbars />
+                    <Switch>
+                        
+                        <Route exact path="/" component={Home}>
+                        </Route>
+
+                        <Route path="/AuthO/Register" component={Register}>
+                        </Route>
+                        <Route path="/AuthO/LogIn" component={login}>
+                        </Route>
+                        <Route path="/AuthO/Logout" component={Logout}>
+                        </Route>
+                    </Switch>
+                </Router>
+
+            </Layout>
+
+        </header>
+    </div>
 }
+export default App;
+
+//const PrivateRoute = ({ component: Component, ...rest }) => {
+//    var resut = authListener();
+//    var rs = { ...rest };
+//    var chek = false;
+//    resut.then(res => res);
+//    setTimeout(() => {
+//        console.log(useraaa);
+//        if (useraaa.email !== undefined) {
+//            return <Route {...rest} render={(props) => (
+//                chek ? <Component {...props} /> : <Redirect to="/Auth/LogIn" />
+//            )
+//            } />
+//        }
+//    }, 1000);
+
+//    if (rs !== undefined) {
+//        chek = true;
+//    }
+
+//    return <Route {...rest} render={(props) => (
+//        chek ? <Component {...props} /> : <Redirect to="/Auth/LogIn" />
+//    )
+//    } />
+//}
+
+//async function authListener() {
+//    let chek = false;
+//    const users = await fire.auth().onAuthStateChanged(user => {
+//        if (user) {
+//            chek = true;
+//        } else {
+//        }
+//    });
+//    return chek;
+//}
